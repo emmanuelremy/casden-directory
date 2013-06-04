@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>DigitalNoiz</title>
+	<meta charset="utf-8">
+	<!-- jQuery Mobile setup -->
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="myLibs/jqm/themes/default/jquery.mobile-1.3.1.min.css" />
+	<script src="myLibs/jqm/jquery.js"></script>
+	<script src="myLibs/jqm/jquery.mobile-1.3.1.min.js"></script>
+	<script src="myLibs/jqm/jquery.tmpl.min.js"></script>
+	<script src="myLibs/underscore-min.js"></script>
+
+	<script type="text/javascript" charset="utf-8" src="myLibs/users.js"></script>
+
+	<!-- Phonegap setup 
+	<script type="text/javascript" charset="utf-8" src="js/phonegap.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/script.js"></script>
+	<link rel="stylesheet" href="css/style.css" />
+        -->	
+</head>
+<body>
+
+<div data-role="page" id="liste">
+	<div data-role="header" data-position="fixed">
+		<h1>Annuaire Yatoo</h1>
+		<a id="home" href="#liste" data-icon="home" data-transition="pop">Home</a>
+	</div>
+	<div data-role="content">
+		<ul id="listePersonnes" data-role="listview" data-autodividers="true" data-filter="true" data-inset="true">
+		</ul>
+	</div>
+	<div data-role="footer" class="ui-bar" data-position="fixed">
+	<p style="font-size:10px!important">Copyright CASDEN 2013 </p>
+	</div>
+</div>
+<div data-role="page" id="personne">
+	<div data-role="header" data-position="fixed">
+		<a href="#liste" data-rel="back" data-icon="arrow-l">Back</a>
+		<h1>Personne Yatoo</h1>
+		<a href="#liste" data-icon="home" data-transition="pop">Home</a>
+	</div>
+	<div data-role="content">
+	  		<div id="employeeDetails">
+ 		  		<img id="employeePic" src="pics/amy_jones.jpg"/>
+	       		<h3 id="fullName">XXXXXXXXXXX</h3>
+	       		<p id="businessCategory">XXXXXXXX</p>
+	       		<p id="roomNumber">XXX</p>
+			<p id="email">XXXXXX@XXXXXX.FR</p>
+			<p id="telephoneNumber">XXXXX</p>
+	  		</div> 
+
+	</div>
+	<div data-role="footer" class="ui-bar" data-position="fixed">
+		<p style="font-size:10px!important">Copyright CASDEN 2013 </p>
+	</div>
+</div>
+
+<script class="tplpersonne" type="text/x-jQuery-tmpl"> 
+    <li data-theme="c"> <a href="#" data-user="${dn}">${sn} ${givenName} </a> </li>  
+</script>
+
+
+<script>
+       var tmpUserDN=null;
+       $(function() {
+	$("#listePersonnes").html($(".tplpersonne").tmpl(users));
+            $("#listePersonnes").listview("refresh");
+
+            $( "#liste li" ).on( 'tap', tapHandler );
+ 
+            function tapHandler( event ) {
+		console.log($(event.target).attr('data-user'));
+		tmpUserDN = $(event.target).attr('data-user');	
+		$.mobile.changePage("#personne");
+	}
+$("#personne").on( "pagebeforeshow", function(event) { 
+        //console.info("INFO:" + tmpUserDN);
+	var tmpUser = _.find(users,function(user) { return tmpUserDN==user.dn; });
+        $("#employeePic").attr("src",tmpUser.picture);
+	$("#fullName").html(tmpUser.sn + " " + tmpUser.givenName);
+	$("#businessCategory").html(tmpUser.businessCategory.split('//').join('<br>'));
+	$("#roomNumber").html("Bureau: " + tmpUser.roomNumber);
+	tmpUser.email=tmpUser.givenName+'.'+tmpUser.sn+'@casdenbp.fr';
+
+	$("#email").html(tmpUser.email.toLowerCase());
+	$("#telephoneNumber").html("Tel: 0" + tmpUser.telephoneNumber);
+} );
+      });
+
+</script>
+</body>
+</html>
