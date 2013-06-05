@@ -39,6 +39,9 @@
 				<p id="email">XXXXXX@XXXXXX.FR</p>
 				<p id="telephoneNumber">XXXXX</p>
 			</div>
+			<div id="zCamera">
+			<button id="changePhoto">Nouvelle photo</button>	
+			</div> 
 
 		</div>
 		<div data-role="footer" class="ui-bar" data-position="fixed">
@@ -67,6 +70,8 @@
         <script type="text/javascript">
             //app.initialize();
         </script>
+
+
 
 
 	<script  type="text/javascript" >
@@ -114,52 +119,7 @@
 		    }
 		 );
 
-
-	      }); //du DOMReady
 		 
-	}
-
-	app.initialize();
-	</script>
-
-
-    </body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
-
-<div data-role="page" data-url="dialog.html">
-    <div data-role="header">
-        <h1>Dialog</h1>
-    </div>
-    <div data-role="content">
-        <p>Is this an answer?</p>
-    </div>
-</div>
-
-
-
 		 $("#changePhoto").on('click',	
 			function(event) {
 			    event.preventDefault();
@@ -181,6 +141,12 @@
 			    return false;
 			});
 
--->
+	      }); //du DOMReady
+	}
 
+//initJQM();
+	app.initialize();
+	</script>
 
+    </body>
+</html>
