@@ -20,11 +20,11 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <!-- 
+         
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
--->
-        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+<!--        <meta name="viewport" content="width=device-width, initial-scale=1">--> 
 
         <title>Casden directory</title>
 
@@ -37,14 +37,6 @@
 
 
     <body>
-<!--        <div class="app">
-            <h1>PhoneGap</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-        </div>
--->
 
 
 <div data-role="page" id="liste">
@@ -110,7 +102,7 @@
        var tmpUserDN=null;
 
 function doJob() {
-     //  $(function() {
+       $(function() {
       //  app.initialize();
 alert('okok');
 	$("#listePersonnes").html($(".tplpersonne").tmpl(users));
@@ -134,7 +126,7 @@ $("#personne").on( "pagebeforeshow", function(event) {
 
 	$("#email").html(tmpUser.email.toLowerCase());
 	$("#telephoneNumber").html("Tel: 0" + tmpUser.telephoneNumber);
-//} );
+} );
       });
 }
 

@@ -1782,5 +1782,4 @@ var cpt=0;
 
 _.each(users,function(user) { user.picture = "pics/" + pics[cpt++ % pics.length]; });
 
-alert('users chargés');
 console.log("users chargés");
