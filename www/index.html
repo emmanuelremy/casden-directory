@@ -32,17 +32,21 @@
 		</div>
 		<div data-role="content">
 			<div id="employeeDetails">
-				<img id="employeePic" src="pics/amy_jones.jpg"/>
+				<img id="employeePic" src="pics/amy_jones.jpg" width="100" height="100"/>
 				<h3 id="fullName">XXXXXXXXXXX</h3>
 				<p id="businessCategory">XXXXXXXX</p>
 				<p id="roomNumber">XXX</p>
 				<p id="email">XXXXXX@XXXXXX.FR</p>
 				<p id="telephoneNumber">XXXXX</p>
+			</div>
+			<div id="zCamera">
+	<button id="changePhoto">Nouvelle photo</button>	
 			</div> 
 
 		</div>
 		<div data-role="footer" class="ui-bar" data-position="fixed">
-			<p style="font-size:10px!important">Copyright CASDEN 2013 </p>
+			<span style="font-size:10px!important; padding-right:30px">Copyright CASDEN 2013 </span>
+			<a href="#" data-role="button" data-theme="a" data-inline="true" data-mini="true" id="infoNotification">Info</a>
 		</div>
 	</div>
 
@@ -71,7 +75,7 @@
 
 
 	<script  type="text/javascript" >
-        var tmpUserDN=null;
+        var tmpUserDN=tmpUser=null;
 
 	function initJQM() {
 	       $(function() {
@@ -80,17 +84,30 @@
 		$("#listePersonnes").listview("refresh");
 
 		$( "#liste li" ).on( 'tap', 
-		    function tapHandler( event ) {
+		    function ( event ) {
 			console.log($(event.target).attr('data-user'));
 			tmpUserDN = $(event.target).attr('data-user');	
-			$.mobile.changePage("#personne",{ transition: "slideup", changeHash: false });
+			$.mobile.changePage("#personne",{ transition: "slide" });
 		    }
 		 );
+
+
+		$( "#infoNotification" ).on('tap', 
+		    function ( event ) {
+			    if (navigator.notification) {
+				navigator.notification.alert("Info plus : " + tmpUser.sn + " " + tmpUser.givenName, null, 'Info plus' , 'OK');
+			    } else {
+				alert("Info plus : " + tmpUser.sn + " " + tmpUser.givenName);
+			    }
+
+		    }
+		 );
+
 
 		$("#personne").on( "pagebeforeshow", 
 		    function(event) { 
 			//console.info("INFO:" + tmpUserDN);
-			var tmpUser = _.find(users,function(user) { return tmpUserDN==user.dn; });
+			tmpUser = _.find(users,function(user) { return tmpUserDN==user.dn; });
 			$("#employeePic").attr("src",tmpUser.picture);
 			$("#fullName").html(tmpUser.sn + " " + tmpUser.givenName);
 			$("#businessCategory").html(tmpUser.businessCategory.split('//').join('<br>'));
@@ -101,10 +118,33 @@
 			$("#telephoneNumber").html("Tel: 0" + tmpUser.telephoneNumber);
 		    }
 		 );
+
+		 
+		 $("#changePhoto").on('click',	
+			function(event) {
+			    event.preventDefault();
+			    var options =   {   quality: 50,
+						destinationType: Camera.DestinationType.DATA_URL,
+						sourceType: 1,      // 0:Photo Library, 1=Camera, 2=Saved Photo Album
+						encodingType: 0     // 0=JPG 1=PNG
+					    };
+			 
+			    navigator.camera.getPicture(
+				function(imageData) {
+				    $('#employeePic').attr('src', "data:image/jpeg;base64," + imageData);
+				},
+				function() {
+				    app.showAlert('Error taking picture', 'Error');
+				},
+				options);
+			 
+			    return false;
+			});
+
 	      }); //du DOMReady
 	}
 
-initJQM();
+//initJQM();
 	app.initialize();
 	</script>
 
