@@ -110,7 +110,7 @@
        var tmpUserDN=null;
 
 function doJob() {
-       $(function() {
+     //  $(function() {
       //  app.initialize();
 alert('okok');
 	$("#listePersonnes").html($(".tplpersonne").tmpl(users));
@@ -134,7 +134,7 @@ $("#personne").on( "pagebeforeshow", function(event) {
 
 	$("#email").html(tmpUser.email.toLowerCase());
 	$("#telephoneNumber").html("Tel: 0" + tmpUser.telephoneNumber);
-} );
+//} );
       });
 }
 
